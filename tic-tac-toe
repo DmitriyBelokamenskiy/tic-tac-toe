@@ -1,0 +1,70 @@
+print ('Игра "Крестики-нолики"')
+field = [['-']*3 for i in range(3)]
+game = True
+counter = 0
+def showe_field():
+    print('  1 2 3')
+    for i in range(3):
+        print(f'{i+1} {" ".join(field[i])}') 
+
+def move_x():
+    if game and counter < 9:
+        print('Ходят крестики')
+        a = int(input('Введите строку'))
+        b = int(input('Введите столбец'))
+        if   1 <= a <= 3 and 1 <= b <= 3 and '-' == field[a-1][b-1]:
+            field[a-1][b-1] = 'X'
+        else:
+            print('Некорректное поле, выберите другое поле')
+            return move_x()
+               
+def move_o():
+    if game and counter < 9:
+        print('Ходят нолики')        
+        a = int(input('Введите строку'))
+        b = int(input('Введите столбец'))    
+            
+        if   1 <= a <= 3 and 1 <= b <= 3 and '-' == field[a-1][b-1]:
+            field[a-1][b-1] = 'O'
+        else:
+            print('Некорректное поле, выберите другое поле')
+            return move_o()
+
+def check():
+    win_combination = [(field[0][0], field[0][1], field[0][2]),
+                        (field[1][0], field[1][1], field[1][2]),
+                        (field[2][0], field[2][1], field[2][2]),
+                        (field[0][0], field[1][0], field[2][0]),
+                        (field[0][1], field[1][1], field[2][1]),
+                        (field[0][2], field[1][2], field[2][2]),
+                        (field[0][0], field[1][1], field[2][2]),
+                        (field[2][0], field[1][1], field[0][2])]
+    count_x = 0
+    count_o = 0
+    
+    
+    for i in win_combination:
+        if i == ('X','X','X'):                 
+            print('Победили крестики')
+            return False
+        elif i == ('O','O','O'):            
+            print('Победили нолики')
+            return False
+        elif counter == 9:
+            print('Ничья')
+            return False
+    return True
+        
+
+while game:    
+    showe_field()
+    move_x()
+    game = check()
+    counter += 1
+    showe_field()
+    move_o()
+    game = check()
+    counter += 1
+    
+    
+    
